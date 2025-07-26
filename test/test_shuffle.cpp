@@ -488,7 +488,7 @@ struct shuffle_test
 
         struct no_op_lhs_generator
         {
-            static constexpr size_t get(size_t index, size_t /*size*/)
+            static constexpr size_t get(size_t index, size_t /*size_*/)
             {
                 return index;
             }
@@ -500,9 +500,9 @@ struct shuffle_test
 
         struct no_op_rhs_generator
         {
-            static constexpr size_t get(size_t index, size_t size)
+            static constexpr size_t get(size_t index, size_t size_)
             {
-                return index + size;
+                return index + size_;
             }
         };
 
@@ -518,9 +518,9 @@ struct shuffle_test
 
         struct common_generator
         {
-            static constexpr size_t get(size_t index, size_t size)
+            static constexpr size_t get(size_t index, size_t size_)
             {
-                return (index & 1) ? (size - index - 1) : (size + (size - index - 1));
+                return (index & 1) ? (size_ - index - 1) : (size_ + (size_ - index - 1));
             }
         };
 
@@ -543,9 +543,9 @@ struct shuffle_test
 
         struct pick_generator
         {
-            static constexpr size_t get(size_t index, size_t size)
+            static constexpr size_t get(size_t index, size_t size_)
             {
-                return index > 2 ? 0 : size;
+                return index > 2 ? 0 : size_;
             }
         };
 
@@ -566,9 +566,9 @@ struct shuffle_test
         {
             struct shuffle_lo_generator
             {
-                static constexpr size_t get(size_t index, size_t size)
+                static constexpr size_t get(size_t index, size_t size_)
                 {
-                    return size - index - 1;
+                    return size_ - index - 1;
                 }
             };
 
@@ -585,9 +585,9 @@ struct shuffle_test
         {
             struct shuffle_hi_generator
             {
-                static constexpr size_t get(size_t index, size_t size)
+                static constexpr size_t get(size_t index, size_t size_)
                 {
-                    return size + size - index - 1;
+                    return size_ + size_ - index - 1;
                 }
             };
 
@@ -628,9 +628,9 @@ struct shuffle_test
 
         struct select_generator
         {
-            static constexpr size_t get(size_t index, size_t size)
+            static constexpr size_t get(size_t index, size_t size_)
             {
-                return (index % 3) ? (index + size) : index;
+                return (index % 3) ? (index + size_) : index;
             }
         };
 
@@ -651,9 +651,9 @@ struct shuffle_test
 
         struct zip_lo_generator
         {
-            static constexpr size_t get(size_t index, size_t size)
+            static constexpr size_t get(size_t index, size_t size_)
             {
-                return (index & 1) ? (index / 2 + size) : index / 2;
+                return (index & 1) ? (index / 2 + size_) : index / 2;
             }
         };
 
@@ -668,9 +668,9 @@ struct shuffle_test
 
         struct zip_hi_generator
         {
-            static constexpr size_t get(size_t index, size_t size)
+            static constexpr size_t get(size_t index, size_t size_)
             {
-                return (index & 1) ? (size / 2 + index / 2 + size) : (size / 2 + index / 2);
+                return (index & 1) ? (size_ / 2 + index / 2 + size_) : (size_ / 2 + index / 2);
             }
         };
 

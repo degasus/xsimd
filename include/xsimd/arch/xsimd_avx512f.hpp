@@ -1884,15 +1884,17 @@ namespace xsimd
                     return batch<T, A>(T(0));
                 }
 
-                __mmask16 mask = uint16_t(0xFFFFu << (N / 4));
+                constexpr size_t NN = (N & 63) / 4;
 
-                if ((N & 15) == 0)
+                __mmask16 mask = 0xFFFFu & (0xFFFFu << NN);
+
+                if ((NN & 3) == 0)
                 {
-                    const uint8_t imm8 = uint8_t(0xe4 << (2 * (N / 16)));
+                    const uint8_t imm8 = 0xffu & (0xe4u << (2 * (NN / 4)));
                     return _mm512_maskz_shuffle_i32x4(mask, x, x, imm8);
                 }
 
-                auto slide_pattern = make_batch_constant<uint32_t, detail::make_slide_left_pattern<N / 4>, A>();
+                auto slide_pattern = make_batch_constant<uint32_t, detail::make_slide_left_pattern<NN>, A>();
                 return _mm512_maskz_permutexvar_epi32(mask, slide_pattern.as_batch(), x);
             }
         }
@@ -1938,15 +1940,17 @@ namespace xsimd
                     return batch<T, A>(T(0));
                 }
 
-                __mmask16 mask = 0xFFFFu >> (N / 4);
+                constexpr size_t NN = (N & 63) / 4;
 
-                if ((N & 15) == 0)
+                __mmask16 mask = 0xFFFFu >> NN;
+
+                if ((NN & 3) == 0)
                 {
-                    const uint8_t imm8 = 0xe4 >> (2 * (N / 16));
+                    const uint8_t imm8 = 0xe4u >> (2 * (NN / 4));
                     return _mm512_maskz_shuffle_i32x4(mask, x, x, imm8);
                 }
 
-                auto slide_pattern = make_batch_constant<uint32_t, detail::make_slide_right_pattern<N / 4>, A>();
+                auto slide_pattern = make_batch_constant<uint32_t, detail::make_slide_right_pattern<NN>, A>();
                 return _mm512_maskz_permutexvar_epi32(mask, slide_pattern.as_batch(), x);
             }
         }

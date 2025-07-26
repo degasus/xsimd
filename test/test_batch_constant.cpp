@@ -192,9 +192,9 @@ struct constant_bool_batch_test
 
     struct split
     {
-        static constexpr bool get(size_t index, size_t size)
+        static constexpr bool get(size_t index, size_t size_)
         {
-            return index < size / 2;
+            return index < size_ / 2;
         }
     };
 
@@ -212,9 +212,9 @@ struct constant_bool_batch_test
 
     struct inv_split
     {
-        static constexpr bool get(size_t index, size_t size)
+        static constexpr bool get(size_t index, size_t size_)
         {
-            return !split().get(index, size);
+            return !split().get(index, size_);
         }
     };
 

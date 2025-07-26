@@ -573,7 +573,7 @@ struct xsimd_api_float_types_functions
     }
     void test_floor()
     {
-        value_type val(3.1);
+        value_type val(3.125);
         CHECK_EQ(extract(xsimd::floor(T(val))), std::floor(val));
     }
     void test_fmax()
@@ -596,7 +596,7 @@ struct xsimd_api_float_types_functions
     }
     void test_frexp()
     {
-        value_type val(3.3);
+        value_type val(3.375);
         int res;
         typename std::conditional<std::is_floating_point<T>::value, int, xsimd::as_integer_t<T>>::type vres;
         CHECK_EQ(extract(xsimd::frexp(T(val), vres)), std::frexp(val, &res));
@@ -615,7 +615,7 @@ struct xsimd_api_float_types_functions
     }
     void test_is_flint()
     {
-        value_type val(4.1);
+        value_type val(4.125);
         CHECK_EQ(extract(xsimd::is_flint(T(val))), (val == long(val)));
     }
     void test_is_odd()
@@ -660,12 +660,12 @@ struct xsimd_api_float_types_functions
     }
     void test_nearbyint()
     {
-        value_type val(3.1);
+        value_type val(3.125);
         CHECK_EQ(extract(xsimd::nearbyint(T(val))), std::nearbyint(val));
     }
     void test_nearbyint_as_int()
     {
-        value_type val(3.1);
+        value_type val(3.125);
         CHECK_EQ(extract(xsimd::nearbyint_as_int(T(val))), long(std::nearbyint(val)));
     }
     void test_nextafter()
@@ -700,12 +700,12 @@ struct xsimd_api_float_types_functions
     }
     void test_rint()
     {
-        value_type val(3.1);
+        value_type val(3.125);
         CHECK_EQ(extract(xsimd::rint(T(val))), std::rint(val));
     }
     void test_round()
     {
-        value_type val(3.1);
+        value_type val(3.125);
         CHECK_EQ(extract(xsimd::round(T(val))), std::round(val));
     }
     void test_rsqrt()
@@ -752,7 +752,7 @@ struct xsimd_api_float_types_functions
     }
     void test_trunc()
     {
-        value_type val(2.1);
+        value_type val(2.125);
         CHECK_EQ(extract(xsimd::trunc(T(val))), std::trunc(val));
     }
 };

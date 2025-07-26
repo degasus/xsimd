@@ -279,22 +279,22 @@ struct batch_int_test
     void test_more_shift() const
     {
         int32_t s = static_cast<int32_t>(sizeof(value_type) * 8);
-        batch_type lhs = batch_type(value_type(1));
+        batch_type value = batch_type(value_type(1));
         batch_type res;
 
         for (int32_t i = 0; i < s; ++i)
         {
-            res = lhs << i;
+            res = value << i;
             value_type expected = value_type(1) << i;
             for (std::size_t j = 0; j < size; ++j)
             {
                 CHECK_EQ(res.get(j), expected);
             }
         }
-        lhs = batch_type(std::numeric_limits<value_type>::max());
+        value = batch_type(std::numeric_limits<value_type>::max());
         for (int32_t i = 0; i < s; ++i)
         {
-            res = lhs >> i;
+            res = value >> i;
             value_type expected = std::numeric_limits<value_type>::max() >> i;
             for (std::size_t j = 0; j < size; ++j)
             {

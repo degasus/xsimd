@@ -547,7 +547,7 @@ namespace xsimd
         {
             constexpr auto size = batch_bool<T, A>::size;
             __m512i bool_val = _mm512_maskz_set1_epi8(self.data, 0x01);
-            __mmask64 mask = size >= 64 ? ~(__mmask64)0 : (1ULL << size) - 1;
+            __mmask64 mask = size >= 64 ? ~(__mmask64)0 : (1ULL << (size & 63)) - 1;
             _mm512_mask_storeu_epi8((void*)mem, mask, bool_val);
         }
 

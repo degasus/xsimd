@@ -116,7 +116,7 @@ endif()
 
 if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /EHsc /MP /bigobj")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4244 /wd4267 /wd4005 /wd4146 /wd4800")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4244 /wd4267 /wd4005 /wd4127 /wd4146 /wd4800")
     set(CMAKE_EXE_LINKER_FLAGS /MANIFEST:NO)
 endif()
 
@@ -215,7 +215,12 @@ else()
 endif()
 
 if (XSIMD_ENABLE_WERROR)
-    target_compile_options(test_xsimd PRIVATE -Werror -Wall -DXSIMD_SKIP_ON_WERROR)
+    target_compile_definitions(test_xsimd PRIVATE XSIMD_SKIP_ON_WERROR)
+    if (CMAKE_CXX_COMPILER_ID MATCHES MSVC)
+        target_compile_options(test_xsimd PRIVATE /WX /W4)
+    else()
+        target_compile_options(test_xsimd PRIVATE -Werror -Wall)
+    endif()
 endif()
 
 add_subdirectory(doc)

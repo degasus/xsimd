@@ -49,8 +49,6 @@ struct xsimd_api_test
     float_vector_type f_vec;
     double_vector_type d_vec;
 
-    array_type expected;
-
     xsimd_api_test()
     {
         init_test_vector(i8_vec);
@@ -120,6 +118,7 @@ private:
     template <class V>
     void test_load_impl(const V& v, const std::string& name)
     {
+        array_type expected;
         batch_type b;
         std::copy(v.cbegin(), v.cend(), expected.begin());
 

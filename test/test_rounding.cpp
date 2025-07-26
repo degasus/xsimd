@@ -146,9 +146,9 @@ struct rounding_test
         }
         // nearbyint_as_int
         {
-            std::array<int_value_type, nb_input> expected;
-            std::array<int_value_type, nb_input> res;
-            std::transform(input.cbegin(), input.cend(), expected.begin(),
+            std::array<int_value_type, nb_input> expected_i;
+            std::array<int_value_type, nb_input> res_i;
+            std::transform(input.cbegin(), input.cend(), expected_i.begin(),
                            [](const value_type& v)
                            { return xsimd::nearbyint_as_int(v); });
             batch_type in;
@@ -157,13 +157,13 @@ struct rounding_test
             {
                 detail::load_batch(in, input, i);
                 out = nearbyint_as_int(in);
-                detail::store_batch(out, res, i);
+                detail::store_batch(out, res_i, i);
             }
             for (size_t i = nb_batches; i < nb_input; ++i)
             {
-                res[i] = xsimd::nearbyint_as_int(input[i]);
+                res_i[i] = xsimd::nearbyint_as_int(input[i]);
             }
-            size_t diff = detail::get_nb_diff(res, expected);
+            size_t diff = detail::get_nb_diff(res_i, expected_i);
             INFO("nearbyint_as_int");
             CHECK_EQ(diff, 0);
         }
